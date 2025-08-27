@@ -15,9 +15,12 @@ interface Movie {
 export default async function Home({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: Promise<{ page?: string }>;
 }) {
-  const currentPage = parseInt(searchParams.page || "1");
+ 
+  const params = await searchParams;
+  const currentPage = parseInt(params.page || "1");
+
   const { results: movies, totalPages } = await fetchLatestMovies(currentPage);
 
   return (
